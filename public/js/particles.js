@@ -45,9 +45,13 @@ $(document).ready(function() {
   var COLOURS = [ '#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423' ];
   var particles = [];
   var pool = [];
+  var demo;
 
-  setTimeout(function() {    
-    var demo = Sketch.create({
+  var initDemo = function() {
+    if (demo) {
+      demo.destroy();
+    }
+    demo = Sketch.create({
       container: el[0],
       eventTarget: ev[0],
       retina: 'auto',
@@ -66,7 +70,6 @@ $(document).ready(function() {
       }
     };
     demo.spawn = function( x, y ) {
-      
       var particle, theta, force;
       if ( particles.length >= MAX_PARTICLES )
         pool.push( particles.shift() );
@@ -104,5 +107,8 @@ $(document).ready(function() {
         }
       }
     };
-  }, 0);
+  };
+
+  $(window).resize(initDemo);
+  setTimeout(initDemo, 0);
 });
